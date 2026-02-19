@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jointly — Finance, Together</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0f1f38;
+    --navy-mid: #1a3050;
+    --gold: #c9a85c;
+    --gold-light: #e8c97a;
+    --cream: #f7f4ef;
+    --cream-dark: #ede9e1;
+    --text: #0f1f38;
+    --muted: #6b7a8d;
+    --white: #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(247, 244, 239, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201, 168, 92, 0.2);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: -0.02em;
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  .nav-cta {
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    padding: 0.6rem 1.4rem;
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+  }
+
+  .nav-cta:hover { background: var(--navy-mid); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 7rem 3rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 50% at 70% 40%, rgba(201, 168, 92, 0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(15, 31, 56, 0.06) 0%, transparent 60%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.035;
+    background-image: linear-gradient(var(--navy) 1px, transparent 1px), linear-gradient(90deg, var(--navy) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content {
+    position: relative; z-index: 1;
+    max-width: 1100px; margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(201, 168, 92, 0.12);
+    border: 1px solid rgba(201, 168, 92, 0.35);
+    border-radius: 100px;
+    padding: 0.3rem 0.9rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #8a6d30;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-eyebrow::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--gold);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 3.75rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--navy);
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 440px;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .waitlist-form {
+    display: flex; gap: 0.75rem; flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .waitlist-form input {
+    flex: 1; min-width: 220px;
+    padding: 0.85rem 1.1rem;
+    border: 1.5px solid rgba(15, 31, 56, 0.18);
+    border-radius: 6px;
+    background: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9375rem;
+    color: var(--navy);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .waitlist-form input:focus { border-color: var(--gold); }
+  .waitlist-form input::placeholder { color: #a0aab4; }
+
+  .btn-primary {
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    padding: 0.85rem 1.75rem;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .btn-primary:hover { background: var(--navy-mid); transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+
+  .form-note {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.75rem;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  /* HERO VISUAL */
+  .hero-visual {
+    animation: fadeUp 0.7s 0.2s ease both;
+    position: relative;
+  }
+
+  .app-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 20px 60px rgba(15, 31, 56, 0.12), 0 4px 16px rgba(15, 31, 56, 0.06);
+    position: relative;
+  }
+
+  .app-card::before {
+    content: '';
+    position: absolute; top: -1px; left: -1px; right: -1px; bottom: -1px;
+    border-radius: 21px;
+    background: linear-gradient(135deg, rgba(201, 168, 92, 0.3), transparent 50%);
+    z-index: -1;
+  }
+
+  .card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1.75rem;
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--navy);
+  }
+
+  .card-badge {
+    background: rgba(201, 168, 92, 0.15);
+    color: #8a6d30;
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 0.25rem 0.6rem;
+    border-radius: 100px;
+    letter-spacing: 0.05em;
+  }
+
+  .goal-item {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .goal-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+  }
+
+  .goal-icon.house { background: rgba(15, 31, 56, 0.06); }
+  .goal-icon.trip { background: rgba(201, 168, 92, 0.12); }
+  .goal-icon.emergency { background: rgba(46, 160, 102, 0.1); }
+
+  .goal-info { flex: 1; }
+  .goal-name { font-size: 0.875rem; font-weight: 500; color: var(--navy); margin-bottom: 0.35rem; }
+  .goal-bar { height: 6px; background: var(--cream-dark); border-radius: 100px; overflow: hidden; }
+  .goal-fill { height: 100%; border-radius: 100px; }
+  .goal-fill.blue { background: var(--navy); width: 34%; }
+  .goal-fill.gold { background: var(--gold); width: 68%; }
+  .goal-fill.green { background: #2ea066; width: 52%; }
+  .goal-pct { font-size: 0.75rem; color: var(--muted); margin-top: 0.3rem; }
+
+  .divider { height: 1px; background: var(--cream-dark); margin: 1.5rem 0; }
+
+  .money-date-prompt {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    border-radius: 12px;
+    padding: 1.25rem;
+    color: var(--white);
+  }
+
+  .prompt-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 0.4rem;
+  }
+
+  .prompt-text {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.9);
+  }
+
+  .prompt-actions {
+    display: flex; gap: 0.5rem; margin-top: 1rem;
+  }
+
+  .prompt-btn {
+    flex: 1; padding: 0.5rem;
+    border-radius: 8px; border: none;
+    font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 500;
+    cursor: pointer;
+  }
+
+  .prompt-btn.yes { background: var(--gold); color: var(--navy); }
+  .prompt-btn.skip { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); }
+
+  /* FLOATING BADGE */
+  .float-badge {
+    position: absolute;
+    background: var(--white);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    box-shadow: 0 8px 24px rgba(15,31,56,0.12);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--navy);
+    display: flex; align-items: center; gap: 0.5rem;
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .float-badge.top-right { top: -16px; right: -20px; }
+  .float-badge.bottom-left { bottom: -16px; left: -20px; animation-delay: -2s; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  /* SOCIAL PROOF */
+  .social-proof {
+    display: flex; align-items: center; gap: 1rem;
+    margin-top: 2rem;
+    animation: fadeUp 0.6s 0.5s ease both;
+  }
+
+  .avatars { display: flex; }
+  .avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 2px solid var(--cream);
+    margin-right: -8px;
+    font-size: 0.7rem;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 600;
+    color: var(--white);
+  }
+  .avatar:nth-child(1) { background: #4a6fa5; }
+  .avatar:nth-child(2) { background: #c9845c; }
+  .avatar:nth-child(3) { background: #5ca876; }
+  .avatar:nth-child(4) { background: #8a5cc9; }
+
+  .proof-text { font-size: 0.825rem; color: var(--muted); }
+  .proof-text strong { color: var(--navy); }
+
+  /* FEATURES */
+  .features {
+    padding: 6rem 3rem;
+    background: var(--white);
+  }
+
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
+    text-align: center;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 500;
+    color: var(--navy);
+    text-align: center;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .section-sub {
+    text-align: center;
+    color: var(--muted);
+    font-size: 1rem;
+    font-weight: 300;
+    max-width: 520px;
+    margin: 0 auto 4rem;
+    line-height: 1.7;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .feature-card {
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid var(--cream-dark);
+    background: var(--cream);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 36px rgba(15,31,56,0.08);
+  }
+
+  .feature-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .feature-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 0.6rem;
+  }
+
+  .feature-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* HOW IT WORKS */
+  .how {
+    padding: 6rem 3rem;
+    background: var(--cream);
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    margin-top: 4rem;
+    position: relative;
+  }
+
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 2rem; left: calc(16.66% + 1rem); right: calc(16.66% + 1rem);
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold), transparent 50%, var(--gold));
+    opacity: 0.4;
+  }
+
+  .step { text-align: center; }
+
+  .step-number {
+    width: 4rem; height: 4rem;
+    border-radius: 50%;
+    border: 1.5px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    color: var(--gold);
+    font-weight: 500;
+    background: var(--cream);
+    position: relative; z-index: 1;
+  }
+
+  .step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 0.6rem;
+  }
+
+  .step-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* PRICING */
+  .pricing {
+    padding: 6rem 3rem;
+    background: var(--navy);
+  }
+
+  .pricing .section-label { color: var(--gold-light); }
+  .pricing h2 { color: var(--white); }
+  .pricing .section-sub { color: rgba(255,255,255,0.5); }
+
+  .pricing-card {
+    max-width: 420px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,92,0.3);
+    border-radius: 20px;
+    padding: 2.5rem;
+    text-align: center;
+  }
+
+  .price-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    color: var(--white);
+    font-weight: 500;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .price-amount sup { font-size: 1.5rem; vertical-align: super; }
+  .price-period { color: rgba(255,255,255,0.45); font-size: 0.875rem; margin-bottom: 2rem; }
+
+  .price-features { list-style: none; margin-bottom: 2rem; }
+  .price-features li {
+    display: flex; align-items: center; gap: 0.75rem;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.75);
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    text-align: left;
+    font-weight: 300;
+  }
+
+  .price-features li::before {
+    content: '✓';
+    color: var(--gold);
+    font-weight: 600;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+  }
+
+  .btn-gold {
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .price-note { font-size: 0.8rem; color: rgba(255,255,255,0.35); margin-top: 1rem; }
+
+  /* FOOTER CTA */
+  .footer-cta {
+    padding: 6rem 3rem;
+    background: var(--cream);
+    text-align: center;
+  }
+
+  .footer-cta h2 { margin-bottom: 1rem; }
+  .footer-cta .section-sub { margin-bottom: 2.5rem; }
+
+  .footer-cta .waitlist-form { justify-content: center; }
+
+  footer {
+    background: var(--navy);
+    padding: 2rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .footer-logo span { color: var(--gold); }
+
+  footer p { font-size: 0.8rem; color: rgba(255,255,255,0.35); }
+
+  /* SUCCESS STATE */
+  .success-msg {
+    display: none;
+    background: rgba(46,160,102,0.1);
+    border: 1px solid rgba(46,160,102,0.3);
+    border-radius: 8px;
+    padding: 0.85rem 1.25rem;
+    font-size: 0.9rem;
+    color: #1e7a4a;
+    margin-top: 0.75rem;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .hero { padding: 6rem 1.5rem 4rem; }
+    .hero-content { grid-template-columns: 1fr; gap: 3rem; }
+    .features, .how, .pricing, .footer-cta { padding: 4rem 1.5rem; }
+    .features-grid, .steps { grid-template-columns: 1fr; }
+    .steps::before { display: none; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    .float-badge { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Jointly<span>.</span></div>
+  <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-eyebrow">Now accepting early access</div>
+      <h1>Money talks are easier when you're <em>doing them together</em></h1>
+      <p class="hero-sub">Jointly is the couples finance app that turns stressful money conversations into a shared ritual — goals you both own, progress you both see, and check-ins that actually feel good.</p>
+
+      <form class="waitlist-form" id="heroForm">
+        <input type="email" placeholder="Enter your email address" required id="heroEmail">
+        <button type="submit" class="btn-primary">Join the Waitlist</button>
+      </form>
+      <div class="success-msg" id="heroSuccess">🎉 You're on the list! We'll be in touch soon.</div>
+      <p class="form-note">Free to join · No credit card · Be first when we launch</p>
+
+      <div class="social-proof">
+        <div class="avatars">
+          <div class="avatar">AK</div>
+          <div class="avatar">MR</div>
+          <div class="avatar">JS</div>
+          <div class="avatar">LP</div>
+        </div>
+        <p class="proof-text"><strong>240+ couples</strong> already on the waitlist</p>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="app-card">
+        <div class="card-header">
+          <span class="card-title">Our Goals</span>
+          <span class="card-badge">3 active</span>
+        </div>
+
+        <div class="goal-item">
+          <div class="goal-icon house">🏡</div>
+          <div class="goal-info">
+            <div class="goal-name">Down Payment</div>
+            <div class="goal-bar"><div class="goal-fill blue"></div></div>
+            <div class="goal-pct">34% · $17,000 of $50,000</div>
+          </div>
+        </div>
+
+        <div class="goal-item">
+          <div class="goal-icon trip">✈️</div>
+          <div class="goal-info">
+            <div class="goal-name">Italy Trip</div>
+            <div class="goal-bar"><div class="goal-fill gold"></div></div>
+            <div class="goal-pct">68% · $3,400 of $5,000</div>
+          </div>
+        </div>
+
+        <div class="goal-item">
+          <div class="goal-icon emergency">🛡️</div>
+          <div class="goal-info">
+            <div class="goal-name">Emergency Fund</div>
+            <div class="goal-bar"><div class="goal-fill green"></div></div>
+            <div class="goal-pct">52% · $7,800 of $15,000</div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="money-date-prompt">
+          <div class="prompt-label">💬 Weekly Money Date</div>
+          <div class="prompt-text">You're both on track this week! Want to put the extra $340 toward Italy?</div>
+          <div class="prompt-actions">
+            <button class="prompt-btn yes">Yes, let's do it!</button>
+            <button class="prompt-btn skip">Maybe later</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="float-badge top-right">📈 +$840 this month</div>
+      <div class="float-badge bottom-left">🤝 Both partners synced</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-inner">
+    <p class="section-label">Why Jointly</p>
+    <h2>Built for two, not just one</h2>
+    <p class="section-sub">Most finance apps treat you like you're single. Jointly is designed from the ground up for couples who want to get on the same page — financially and emotionally.</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <div class="feature-title">Shared Goal Tracking</div>
+        <p class="feature-desc">Set goals together, contribute individually, and watch your progress in real time. Both partners always know exactly where things stand.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <div class="feature-title">Weekly Money Dates</div>
+        <p class="feature-desc">Guided weekly check-ins that make financial conversations feel natural — not confrontational. Structured prompts, shared wins, no blame.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Joint Dashboard</div>
+        <p class="feature-desc">One clean view of your combined financial picture. Spending, saving, and progress — all in one place that both of you can see and trust.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <div class="feature-title">Smart Nudges</div>
+        <p class="feature-desc">Gentle, timely reminders that keep you both engaged — not nagging. Celebrate milestones together and stay motivated between check-ins.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <div class="feature-title">Privacy Controls</div>
+        <p class="feature-desc">Keep personal spending private while sharing what matters. Jointly respects that every couple has their own boundaries around money.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <div class="feature-title">Web & Mobile</div>
+        <p class="feature-desc">Fully synced across iOS, Android, and browser. Whether you're on the couch together or across the country, Jointly keeps you connected.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="section-inner">
+    <p class="section-label">How it works</p>
+    <h2>Three steps to financial clarity</h2>
+    <p class="section-sub">Getting started takes less than five minutes. No bank linking required to begin.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-title">Create your couple profile</div>
+        <p class="step-desc">Sign up and invite your partner. Each of you gets your own login with shared access to your joint space.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-title">Set your shared goals</div>
+        <p class="step-desc">Add the things you're saving toward together — a home, a vacation, an emergency fund, or anything else that matters to you both.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-title">Show up each week</div>
+        <p class="step-desc">Your weekly Money Date takes 5–10 minutes. Update progress, talk through spending, and celebrate wins together.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing">
+  <div class="section-inner">
+    <p class="section-label">Pricing</p>
+    <h2>Simple, honest pricing</h2>
+    <p class="section-sub">One plan. Everything included. Cancel any time.</p>
+
+    <div class="pricing-card">
+      <div class="price-amount"><sup>$</sup>12</div>
+      <div class="price-period">per couple / month</div>
+
+      <ul class="price-features">
+        <li>Unlimited shared goals</li>
+        <li>Weekly Money Date check-ins</li>
+        <li>Joint dashboard for both partners</li>
+        <li>Smart progress nudges</li>
+        <li>Privacy controls per partner</li>
+        <li>iOS, Android & web access</li>
+        <li>Priority support</li>
+      </ul>
+
+      <button class="btn-gold" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})">Join the Waitlist — It's Free</button>
+      <p class="price-note">Early waitlist members get 3 months free at launch</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="footer-cta" id="waitlist">
+  <div class="section-inner">
+    <p class="section-label">Get early access</p>
+    <h2>Be first to build better money habits together</h2>
+    <p class="section-sub">Join the waitlist today. Waitlist members get 3 months free when we launch — no credit card needed.</p>
+
+    <form class="waitlist-form" id="footerForm" style="justify-content:center;">
+      <input type="email" placeholder="Enter your email address" required id="footerEmail">
+      <button type="submit" class="btn-primary">Reserve My Spot</button>
+    </form>
+    <div class="success-msg" id="footerSuccess" style="max-width:420px;margin:0.75rem auto 0;">🎉 You're on the list! We'll be in touch soon.</div>
+    <p class="form-note" style="text-align:center;margin-top:0.75rem;">No spam, ever. Unsubscribe any time.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Jointly<span>.</span></div>
+  <p>© 2026 Jointly. All rights reserved.</p>
+</footer>
+
+<script>
+  function handleSubmit(formId, emailId, successId) {
+    const form = document.getElementById(formId);
+    const email = document.getElementById(emailId);
+    const success = document.getElementById(successId);
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (!email.value) return;
+
+      // Store locally (replace with real API call)
+      const emails = JSON.parse(localStorage.getItem('jointly_waitlist') || '[]');
+      if (!emails.includes(email.value)) emails.push(email.value);
+      localStorage.setItem('jointly_waitlist', JSON.stringify(emails));
+
+      form.style.display = 'none';
+      success.style.display = 'block';
+
+      // Update counter
+      document.querySelectorAll('.proof-text strong').forEach(el => {
+        const current = parseInt(el.textContent) || 240;
+        el.textContent = (current + 1) + '+ couples';
+      });
+    });
+  }
+
+  handleSubmit('heroForm', 'heroEmail', 'heroSuccess');
+  handleSubmit('footerForm', 'footerEmail', 'footerSuccess');
+
+  // Smooth scroll for nav CTA
+  document.querySelector('.nav-cta').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('waitlist').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // Animate on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.feature-card, .step').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
